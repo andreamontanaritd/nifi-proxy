@@ -171,7 +171,7 @@ var updateProcessGroupState = function(uuid, running, callback) {
     }
     this.putProcessGroupFlow(uuid, {
       id: uuid,
-      state: running ? "RUNNING" : "STOPPED"
+      state: running ? 'RUNNING' : 'STOPPED'
     }, (err) => {
       callback(err);
     })
@@ -201,7 +201,7 @@ var updateProcessorState = function(uuid, running, callback) {
       revision: processor.revision,
       component: {
         id: uuid,
-        state: running ? "RUNNING" : "STOPPED"
+        state: running ? 'RUNNING' : 'STOPPED'
       }
     }, (err) => {
       callback(err);
@@ -371,13 +371,13 @@ var createConnection = function(clientId, parentPgId, destinationProcessorId, ta
    * POST
    * http://localhost:8080/nifi-api/process-groups/b6a09099-0157-1000-9aa8-fcccef6172ac/connections
    *
-   * {"revision":{"clientId":"bbcdbc47-0157-1000-f0aa-95644a368716","version":0},
-   * "component":{"name":"","source":{"id":"b7d14854-0157-1000-a935-145406f161cf",
-   * "groupId":"b7d14852-0157-1000-0285-d7ee38fb573a","type":"OUTPUT_PORT"},
-   * "destination":{"id":"b7d17e1c-0157-1000-62ed-9a7afbaca64b",
-   * "groupId":"b6a09099-0157-1000-9aa8-fcccef6172ac","type":"PROCESSOR"},
-   * "flowFileExpiration":"0 sec","backPressureDataSizeThreshold":"1 GB",
-   * "backPressureObjectThreshold":"10000","bends":[],"prioritizers":[]}}
+   * {'revision':{'clientId':'bbcdbc47-0157-1000-f0aa-95644a368716','version':0},
+   * 'component':{'name':'','source':{'id':'b7d14854-0157-1000-a935-145406f161cf',
+   * 'groupId':'b7d14852-0157-1000-0285-d7ee38fb573a','type':'OUTPUT_PORT'},
+   * 'destination':{'id':'b7d17e1c-0157-1000-62ed-9a7afbaca64b',
+   * 'groupId':'b6a09099-0157-1000-9aa8-fcccef6172ac','type':'PROCESSOR'},
+   * 'flowFileExpiration':'0 sec','backPressureDataSizeThreshold':'1 GB',
+   * 'backPressureObjectThreshold':'10000','bends':[],'prioritizers':[]}}
    */
 
   var conn = {
@@ -386,7 +386,7 @@ var createConnection = function(clientId, parentPgId, destinationProcessorId, ta
       version: 0
     },
     component: {
-      name: "",
+      name: '',
       source: {
         id: outputPortId,
         groupId: targetPgId,
@@ -394,10 +394,10 @@ var createConnection = function(clientId, parentPgId, destinationProcessorId, ta
       destination: {
         id: destinationProcessorId,
         groupId: parentPgId,
-        type: "PROCESSOR"
+        type: 'PROCESSOR'
       },
-      flowFileExpiration: "0 sec",
-      backPressureObjectThreshold: "10000",
+      flowFileExpiration: '0 sec',
+      backPressureObjectThreshold: '10000',
       bends: [],
       prioritizers: []
     },
@@ -408,7 +408,23 @@ var createConnection = function(clientId, parentPgId, destinationProcessorId, ta
 }
 
 var getAccessToken = function(username, passwd, callback) {
-  var querystring = require('querystring');
+//  var querystring = require('querystring');
+
+
+  var request = require('request').defaults({ rejectUnauthorized: false });
+
+var options = { method: 'POST',
+  url: 'https://127.0.0.1:18079/nifi-api/access/token',
+  headers: 
+   { 'Cache-Control': 'no-cache',
+     'Content-Type': 'application/x-www-form-urlencoded' },
+  form: { username: username, password: passwd } };
+
+request(options, function (error, response, body) {
+  if (error) throw new Error(error);
+  callback(body);
+});
+  /*
 
 var form = {
     username: username,
@@ -423,7 +439,7 @@ this.request({
       'Content-Length': contentLength,
       'Content-Type': 'application/x-www-form-urlencoded'
     },
-    uri: 'https://0.0.0.0:18079/nifi-api/access/token',
+    uri: 'https://127.0.0.1:18079/nifi-api/access/token',
     body: formData,
     method: 'POST'
   }, function (err, res, body) {
@@ -435,7 +451,9 @@ this.request({
       callback(res);
     }
   });
+  */
 }
+
 
 exports.NiFiApi = NiFiApi;
 exports.fromYamlFile = fromYamlFile;

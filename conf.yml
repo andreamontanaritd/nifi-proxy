@@ -10,8 +10,8 @@ secure:
   host: '127.0.0.1'
   port: 18079
   secure: true
-  checkServerIdentity: false
-  caCert: ca-cert.pem
-  clientCert: client-cert.pem
-  clientKey: client-key.pem
+  checkServerIdentity: true
+  caCert: keys/ca-crt.pem
+  clientCert: keys/client1-crt.pem
+  clientKey: keys/client1-key.pem
   clientKeyPass: password

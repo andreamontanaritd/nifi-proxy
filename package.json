@@ -10,7 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "http-proxy": "^1.17.0",
-    "request": "*",
-    "js-yaml": "*"
+    "https": "^1.0.0",
+    "js-yaml": "*",
+    "request": "*"
   }
 }
