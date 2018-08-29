@@ -1,0 +1,17 @@
+plain:
+  host: '127.0.0.1'
+  port: 8079
+  secure: false
+  caCert: 
+  clientCert: 
+  clientKey: 
+  debug: false
+secure:
+  host: '127.0.0.1'
+  port: 18079
+  secure: true
+  checkServerIdentity: false
+  caCert: ca-cert.pem
+  clientCert: client-cert.pem
+  clientKey: client-key.pem
+  clientKeyPass: password
